@@ -21,3 +21,26 @@ export const getCartByIdSelector = createSelector(
   }
 );
 export const getCartSelector = createSelector(cart, (cart) => cart);
+
+export const totalCartItemsSelector = createSelector(cart, (cart) => {
+  if (cart.length > 0) {
+    const { totalPrice, totalCartItems } = cart.reduce(
+      (acc, curr) => {
+        const totalCartItems = acc.totalCartItems + curr.quantity;
+        const totalPrice = acc.totalPrice + curr.total_price * curr.quantity;
+
+        return { totalCartItems, totalPrice };
+      },
+      {
+        totalCartItems: 0,
+        totalPrice: 0,
+      }
+    );
+    return { totalPrice, totalCartItems };
+  } else {
+    return {
+      totalCartItems: 0,
+      totalPrice: 0,
+    };
+  }
+});

@@ -34,3 +34,14 @@ export const updateCart = createAsyncThunk(
     }
   }
 );
+export const checkoutCart = createAsyncThunk(
+  'cart/checkout',
+  async (cartValue, { rejectWithValue }) => {
+    try {
+      const response = await ProductApi.checkoutOrder(cartValue);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addCart, getCarts, updateCart } from './asynThunk';
+import { addCart, checkoutCart, getCarts, updateCart } from './asynThunk';
 
 const initialState = {
   cart: null,
@@ -68,6 +68,19 @@ const cartSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(updateCart.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    });
+    builder.addCase(checkoutCart.fulfilled, (state, { payload }) => {
+      state.error = null;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(checkoutCart.pending, (state, { payload }) => {
+      state.error = null;
+      state.loading = true;
+    });
+    builder.addCase(checkoutCart.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
     });

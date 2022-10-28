@@ -1,10 +1,14 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCartSelector } from '../../features/cart/cartSelector';
+import {
+  getCartSelector,
+  totalCartItemsSelector,
+} from '../../features/cart/cartSelector';
 import './Cart.css';
 import CartCard from './components/CartCard';
 const Cart = () => {
   const carts = useSelector(getCartSelector);
+  const { totalPrice, totalCartItems } = useSelector(totalCartItemsSelector);
   console.log(carts);
   const isEmpty = carts && carts.length > 0 ? false : true;
   return (
@@ -33,15 +37,15 @@ const Cart = () => {
               <div>
                 <div className='sub-total'>
                   <p>SUBTOTAL:</p>
-                  <p>$ {carts.totalPrice}</p>
+                  <p>$ {totalPrice.toFixed(2)}</p>
                 </div>
                 <div className='total-item'>
                   <p>ITEM(S):</p>
-                  <p>{carts.totalCart}</p>
+                  <p>{totalCartItems}</p>
                 </div>
-                <button className='proceed-checkout'>
+                <Link to='/checkout' className='proceed-checkout'>
                   PROCEED TO CHECKOUT
-                </button>
+                </Link>
               </div>
             </div>
           </>

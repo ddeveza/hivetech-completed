@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import BannerMobileImage from '../../assets/images/Banner-Mobile.png';
 import BannerImage from '../../assets/images/Banner.png';
 import OfferImage001 from '../../assets/images/offer001.png';
@@ -9,6 +10,14 @@ import Categories from './component/Categories';
 import './landing.css';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const { token } = JSON.parse(localStorage.getItem('users')) ?? { token: '' };
+
+  useEffect(() => {
+    if (token) {
+      navigate('/home');
+    }
+  }, [navigate, token]);
   return (
     <section className='main-wrapper'>
       <div className='banner'>
